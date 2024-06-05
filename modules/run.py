@@ -47,6 +47,19 @@ def run():
                     print(f"Sorry, sheet \"{sheetName}\" does not exist")
             else:
                 print(f"User \"{userName}\" does not exist")
+        elif data == '4':
+            sheetName = input("> ")
+            userName,sheetName = sheetName.split(' ')
+            if userName in users:
+                user1 = users[userName]
+                if sheetName in user1.sheet:
+                    sheet = user1.sheet[sheetName]
+                    sheetValue = input("> ")
+                    sheet.change_value(sheetValue)
+                else:
+                    print(f"Sorry, sheet \"{sheetName}\" does not exist")
+            else:
+                print(f"User \"{userName}\" does not exist")
         else:
             print("Please enter a number")
 

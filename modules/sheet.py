@@ -47,7 +47,9 @@ class Sheet:
         row,col,val = expression.split(" ")
         col = int(col)
         row = int(row)
-        if val.isdigit() == True:
+        if row >2 or row <0 or col>2 or col<0:
+            print("Invalid input please put in the range of 0 to 2")
+        elif val.isdigit() == True:
             self.sheetValue[row][col] = int(val)
         else:
             self.sheetValue[row][col] = self.expression_handler(*val)
