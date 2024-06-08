@@ -5,7 +5,7 @@ class user:
         self.userName = userName
         self.sheet = {}
         print("Create a user named \""+userName+"\"")
-    def create_sheet(self,sheetName):
-        self.sheet[sheetName] = Sheet(sheetName)
+    def create_sheet(self,sheetName,name):
+        self.sheet[sheetName] = Sheet(sheetName,name)
         
     
