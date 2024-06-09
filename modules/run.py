@@ -1,8 +1,9 @@
 from utils.menu import menu
 
 from modules.user import user
+from modules.sheet import collaborate_checker
 
-def check_expression(expression, option):
+def check_expression(expression, option, userList = []):
     if option == 1:
         if " " in expression:
             print("wrong input format")
@@ -12,20 +13,22 @@ def check_expression(expression, option):
         if len(sheetName) != 2:
             print("wrong input format")
             return False
+    elif option == 3:
+        sheetName = expression.split(" ")
+        if len(sheetName) != 3:
+            print("wrong input format")
+            return False
+    elif option == 4:
+        for user in userList:
+            if expression in user.sheet:
+                sheet = user.sheet[expression]
+                if expression in sheet.access['read-only'] or expression in sheet.access['editable']:
+                    return sheet
     return True
-
-# def collaborate_checker(userName,sheetName,userList):
-#     for user in userList:
-#         if sheetName in user.sheet:
-#             sheet = user.sheet[sheetName]
-#             if userName in sheet.access['read-only'] or userName in sheet.access['editable']:
-#                 return 
         
-
-
 def run():
-    users = {}
-    sheet = {}
+    userList = {}
+    sheetList = []
     while(True):
         menu()
         data = input("> ")
