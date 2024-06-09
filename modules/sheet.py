@@ -9,29 +9,39 @@ def check_access(func):
         return func(self, *args, **kwargs)
     return wrapper
 def expression_handler(*args):
-        args = args[1:]
+        # args = args[1:]
         args =  ''.join(args)
-        tokens = re.findall(r'\d+|\+|\-|\*|\/', args)
+        tokens = re.findall(r'\d+\.\d+|\d+|\+|\-|\*|\/', args)
+        # is_float = any('.' in token for token in tokens if re.match(r'\d+\.\d+|\d+', token))
+        # print(is_float)
+        # def convert(token):
+        #     if token in ['+','-','*','/']:
+        #         return token
+        #     return float(token) if is_float else int(token)
+    
+        # tokens = [convert(token) for token in tokens]
         exp = ['*','/']
         for x in exp:
           while(x in tokens) :
               idx = tokens.index(x)
               if x == "*":
-                res = int(tokens[idx-1])*int(tokens[idx+1])
+                res = float(tokens[idx-1])*float(tokens[idx+1])
               else:
-                res = int(tokens[idx-1])/int(tokens[idx+1])
+                res = float(tokens[idx-1])/float(tokens[idx+1])
               tokens.pop(idx-1)
               tokens.pop(idx)
               tokens[idx-1] =res
 
-        result = int(tokens[0])
+        result = float(tokens[0])
         for idx,arg in enumerate(tokens):
             if arg == '+':
-                result += int(tokens[idx+1])
+                result += float(tokens[idx+1])
             elif arg =='-':
-                result -= int(tokens[idx+1])
-            
-        return result
+                result -= float(tokens[idx+1])
+        
+        is_integer = result.is_integer()
+        # print(is_integer)
+        return int(result) if is_integer else round(result,2)
 
 class Sheet:
     def __init__(self,sheetName,name):
@@ -61,7 +71,7 @@ class Sheet:
         elif val.isdigit() == True:
             self.sheetValue[row][col] = int(val)
         else:
-            self.sheetValue[row][col] = self.expression_handler(*val)
+            self.sheetValue[row][col] = expression_handler(*val)
         
         self.show_sheet()
 
