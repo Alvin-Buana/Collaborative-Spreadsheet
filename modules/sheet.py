@@ -8,6 +8,19 @@ def check_access(func):
             return
         return func(self, *args, **kwargs)
     return wrapper
+
+def collaborate_checker(userName,sheetName,userList):
+    for user in userList.values():
+        if sheetName in user.sheet.keys():
+            sheet = user.sheet[sheetName]
+            if sheet != None:
+                if userName in sheet.access['read-only'] or userName in sheet.access['editable'] or userName == sheet.owner:
+                    return sheet
+                else:
+                    return "no_access"
+            else:
+                return "no_sheet_found"
+            
 def expression_handler(*args):
         args = args[1:]
         args =  ''.join(args)
