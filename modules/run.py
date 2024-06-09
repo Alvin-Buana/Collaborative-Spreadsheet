@@ -18,12 +18,6 @@ def check_expression(expression, option, userList = []):
         if len(sheetName) != 3:
             print("wrong input format")
             return False
-    elif option == 4:
-        for user in userList:
-            if expression in user.sheet:
-                sheet = user.sheet[expression]
-                if expression in sheet.access['read-only'] or expression in sheet.access['editable']:
-                    return sheet
     return True
         
 def run():
